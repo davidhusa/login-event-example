@@ -19,8 +19,8 @@ with an SMS API (like Twilio or ClickSend).
 
 Key Features:
 1. Trigger-Based Notifications:
- Set up a trigger within the application that initiates an SMS notification. This
-could be a user action or a specific application state.
+ Set up a trigger within the application that initiates an SMS notification.
+  This could be a user action or a specific application state.
 
 2. SMS API Integration:
  Integrate a third-party SMS API to send real-time notifications.
