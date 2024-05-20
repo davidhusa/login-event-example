@@ -27,9 +27,7 @@ class User < ApplicationRecord
 
   def send_message_on_event
     if use_twilio?
-      event_messages.each do |message|
-        text_messenger.send_message(phone_number, message)
-      end
+      text_messenger.send_message(phone_number, event_messages.join(", "))
     end
 
     Rails.logger.info "### LOGIN EVENT ###\n#{phone_number}: #{event_messages.join(', ')}" unless event_messages.blank?
