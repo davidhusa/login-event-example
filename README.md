@@ -18,7 +18,7 @@ The messages will be logged on the server even if you don't have Twilio credenti
   `rails db:create`
   `rails db:migrate`
 4) Copy environment variable file
-  `cp .env.example .env`
+  `cp example.env .env`
 5) Fill in `TWILIO_ACCOUNT_SID`, `TWILIO_AUTH_TOKEN`, and `TWILIO_PHONE_NUMBER` based on your Twilio credentials.
 6) Start the server
   `rails s`
