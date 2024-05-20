@@ -7,6 +7,8 @@ class User < ApplicationRecord
 
   validates :phone_number, presence: true
 
+  after_create :send_message_on_event
+
   # This callback triggers after signing in
   def after_database_authentication
     send_message_on_event
@@ -43,15 +45,17 @@ class User < ApplicationRecord
 
   def event_messages
     event_messages = []
-    if current_sign_in_ip != last_sign_in_ip
+    if current_sign_in_ip && last_sign_in_ip && current_sign_in_ip != last_sign_in_ip
       event_messages << "Your account was accessed from a new IP address (#{current_sign_in_ip})"
     end
 
-    if sign_in_count % 100 == 0
+    if sign_in_count && sign_in_count > 0 && sign_in_count % 100 == 0
       event_messages << "Congratulations! You have signed in #{sign_in_count} times!!!!!!!!!"
     end
 
-    if current_sign_in_at.saturday? || current_sign_in_at.sunday?
+    sign_in_time = current_sign_in_at || Time.current
+
+    if sign_in_time.saturday? || sign_in_time.sunday?
       event_messages << "You signed in on the weekend!"
     end
 
