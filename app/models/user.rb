@@ -32,7 +32,7 @@ class User < ApplicationRecord
       end
     end
 
-    Rails.logger.info "#{phone_number}: #{event_messages.join(', ')}" unless event_messages.blank?
+    Rails.logger.info "### LOGIN EVENT ###\n#{phone_number}: #{event_messages.join(', ')}" unless event_messages.blank?
   end
 
   def text_messenger
