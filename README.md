@@ -10,24 +10,22 @@ The messages will be logged on the server even if you don't have Twilio credenti
 # Installation
 
 1) Clone this repository
+  * `git clone git@github.com:davidhusa/login-event-example.git`
+  * `cd login-event-example`
 
-  `git clone git@github.com:davidhusa/login-event-example.git`
-
-  `cd login-event-example`
 2) Install ruby dependencies 
+* `bundle install`
 
-  `bundle install`
 3) Initialize the database
+* `rails db:create`
+* `rails db:migrate`
 
-  `rails db:create`
-
-  `rails db:migrate`
 4) Copy environment variable file
+* `cp example.env .env`
 
-  `cp example.env .env`
 5) Fill in `TWILIO_ACCOUNT_SID`, `TWILIO_AUTH_TOKEN`, and `TWILIO_PHONE_NUMBER` based on your Twilio credentials.
-6) Start the server
 
-  `rails s`
+6) Start the server
+* `rails s`
 
 Run tests with `rails test`.
