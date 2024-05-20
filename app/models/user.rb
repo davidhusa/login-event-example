@@ -5,16 +5,62 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :trackable
 
-  after_update :send_message_on_event
+  validates :phone_number, presence: true
+
+  # This callback triggers after signing in
+  def after_database_authentication
+    send_message_on_event
+  end
+
+  # Returns the phone number for use in "sanitized_phone_number" field in user form
+  def sanitized_phone_number
+    self.phone_number
+  end
+
+  # Used in user form to set the phone number, removing all the dashes (and other non-digit characters in case the
+  #  stimulus controller isn't working properly)
+  def sanitized_phone_number=(value)
+    self.phone_number = value.gsub(/\D/, '')
+  end
 
   private
 
   def send_message_on_event
+    if use_twilio?
+      event_messages.each do |message|
+        text_messenger.send_message(phone_number, message)
+      end
+    end
+
+    Rails.logger.info "#{phone_number}: #{event_messages.join(', ')}" unless event_messages.blank?
+  end
+
+  def text_messenger
     TextMessenger.new(
       account_sid: ENV['TWILIO_ACCOUNT_SID'],
       auth_token: ENV['TWILIO_AUTH_TOKEN'],
       account_phone_number: ENV['TWILIO_PHONE_NUMBER']
-    ).send_message(phone_number, 'Your account has been updated.')
+    )
   end
 
+  def event_messages
+    event_messages = []
+    if current_sign_in_ip != last_sign_in_ip
+      event_messages << "Your account was accessed from a new IP address (#{current_sign_in_ip})"
+    end
+
+    if sign_in_count % 100 == 0
+      event_messages << "Congratulations! You have signed in #{sign_in_count} times!!!!!!!!!"
+    end
+
+    if current_sign_in_at.saturday? || current_sign_in_at.sunday?
+      event_messages << "You signed in on the weekend!"
+    end
+
+    event_messages
+  end
+
+  def use_twilio?
+    ENV['TWILIO_ACCOUNT_SID'].present? && ENV['TWILIO_AUTH_TOKEN'].present? && ENV['TWILIO_PHONE_NUMBER'].present?
+  end
 end

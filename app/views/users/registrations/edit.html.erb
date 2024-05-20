@@ -9,8 +9,8 @@
   </div>
 
   <div class="field">
-    <%= f.label :phone_number %><br />
-    <%= f.number_field :phone_number, autocomplete: "tel" %>
+    <%= f.label :sanitized_phone_number, "Phone number (start with the country code)" %><br />
+    <%= f.text_field :sanitized_phone_number, autocomplete: "tel", data: { controller: "phone-number-field", phone_number_field_target: "field" } %>
   </div>
 
   <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>

@@ -1,0 +1,21 @@
+.container {
+    max-width: 600px;
+    margin: 16px;
+}
+
+.field {
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
+
+.alert {
+    color: red;
+}
+
+.notice {
+    color: green;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+}

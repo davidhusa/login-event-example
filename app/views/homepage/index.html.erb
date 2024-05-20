@@ -1,6 +1,10 @@
 <% if user_signed_in? %>
-    <%= link_to "Sign out", destroy_user_session_path, data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %>
+    <div>
+        Your account for email <%= current_user.email %> (tel: +<%= current_user.phone_number %>) 
+        has logged in <%= pluralize(current_user.sign_in_count, "time") %>.</div>
+    <div><%= link_to "Edit user", edit_user_registration_path %></div>
+    <div><%= link_to "Sign out", destroy_user_session_path, data: { turbo_method: :delete } %></div>
 <% else %>
-    <%= link_to "Sign in", new_user_session_path %>
-    <%= link_to "Register", new_user_registration_path %>
+    <div><%= link_to "Sign in", new_user_session_path %></div>
+    <div><%= link_to "Register", new_user_registration_path %></div>
 <% end %>
