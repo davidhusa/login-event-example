@@ -12,7 +12,7 @@ class UserTest < ActiveSupport::TestCase
   test "All event messages" do
     @user.current_sign_in_ip = '192.168.1.1'
     @user.last_sign_in_ip = '192.168.1.2'
-    @user.sign_in_count = 100
+    @user.sign_in_count = 99
     @user.current_sign_in_at = Time.new(2022, 1, 1, 0, 0, 0) # a saturday
 
     expected_messages = [
